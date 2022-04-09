@@ -8,6 +8,7 @@ using namespace rlxos;
 #include <iostream>
 using namespace std;
 
+#include "handlers/app.hh"
 #include "handlers/appimage.hh"
 #include "handlers/font.hh"
 #include "handlers/icon.hh"
@@ -37,6 +38,8 @@ std::shared_ptr<Handler> Handler::from_path(string path) {
   auto ext = path.substr(idx + 1, path.length() - (idx + 1));
 
   if (ext == "app") {
+    return std::make_shared<AppHandler>(path);
+  } else if (ext == "AppImage") {
     return std::make_shared<AppImageHandler>(path);
   } else if (ext == "theme") {
     return std::make_shared<ThemeHandler>(path);
