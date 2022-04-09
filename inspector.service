@@ -1,0 +1,17 @@
+[Unit]
+Description=Application Directory Inspector
+After=gnome.target
+
+[Service]
+Type=simple
+ExecStart=/bin/inspector
+
+StandardOutput=journal
+
+RestartSec=5
+Restart=always
+
+
+[Install]
+Alias=inspector.service
+WantedBy=default.target
