@@ -80,6 +80,8 @@ void AppImageHandler::patch_desktop(string src, string dest) {
       line = newline;
     } else if (line.find("Icon=", 0) == 0) {
       line = "Icon=" + destIcon;
+    } else if (line.find("TryExec=", 0) == 0) {
+      continue;
     }
     destFile << line << std::endl;
   }

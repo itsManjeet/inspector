@@ -29,7 +29,11 @@ void Inspector::inspect() {
     if (!fs::exists(iter->first)) {
       auto handler = Handler::from_path(iter->first);
       if (handler != nullptr) {
-        handler->handle_delete();
+        try {
+            handler->handle_delete();
+          } catch (std::exception const& exc) {
+            cerr << "Error! " << exc.what() << endl;
+          }
       }
 
       iter = mStore.erase(iter);
@@ -48,7 +52,11 @@ void Inspector::inspect() {
 
         auto handler = Handler::from_path(f.path().string());
         if (handler != nullptr) {
-          handler->handle_create();
+          try {
+            handler->handle_create();
+          } catch (std::exception const& exc) {
+            cerr << "Error! " << exc.what() << endl;
+          }
         }
 
       } else {
@@ -56,7 +64,11 @@ void Inspector::inspect() {
           mStore[f.path().string()] = cur_status;
           auto handler = Handler::from_path(f.path().string());
           if (handler != nullptr) {
-            handler->handle_create();
+            try {
+              handler->handle_create();
+            } catch (std::exception const& exc) {
+              cerr << "Error! " << exc.what() << endl;
+            }
           }
         }
       }
