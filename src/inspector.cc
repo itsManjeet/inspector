@@ -28,7 +28,9 @@ void Inspector::inspect() {
   while (iter != mStore.end()) {
     if (!fs::exists(iter->first)) {
       auto handler = Handler::from_path(iter->first);
-      handler->handle_delete();
+      if (handler != nullptr) {
+        handler->handle_delete();
+      }
 
       iter = mStore.erase(iter);
     } else {
@@ -43,13 +45,19 @@ void Inspector::inspect() {
       auto cur_status = fs::last_write_time(f);
       if (mStore.find(f.path().string()) == mStore.end()) {
         mStore[f.path().string()] = cur_status;
+
         auto handler = Handler::from_path(f.path().string());
-        handler->handle_create();
+        if (handler != nullptr) {
+          handler->handle_create();
+        }
+
       } else {
         if (mStore[f.path().string()] != cur_status) {
           mStore[f.path().string()] = cur_status;
           auto handler = Handler::from_path(f.path().string());
-          handler->handle_create();
+          if (handler != nullptr) {
+            handler->handle_create();
+          }
         }
       }
     }

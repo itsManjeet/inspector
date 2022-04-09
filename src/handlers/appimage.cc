@@ -46,8 +46,8 @@ std::shared_ptr<Info> AppImageHandler::info() {
     notify("Failed to read information from appimage");
     return nullptr;
   }
-
-  return mInfo = std::make_shared<Info>(file);
+  mInfo = std::make_shared<Info>(file);
+  return mInfo;
 }
 
 void AppImageHandler::patch_desktop(string src, string dest) {
@@ -57,6 +57,9 @@ void AppImageHandler::patch_desktop(string src, string dest) {
   data = string((istreambuf_iterator<char>(srcFile)),
                 (istreambuf_iterator<char>()));
   srcFile.close();
+
+  std::string destIcon =
+      string(getenv("HOME")) + "/.local/share/pixmaps/" + get_hash() + ".png";
 
   std::stringstream ss(data);
   std::string line;
@@ -76,7 +79,7 @@ void AppImageHandler::patch_desktop(string src, string dest) {
       }
       line = newline;
     } else if (line.find("Icon=", 0) == 0) {
-      line = "Icon=" + get_hash();
+      line = "Icon=" + destIcon;
     }
     destFile << line << std::endl;
   }
