@@ -58,8 +58,6 @@ bool Handler::handle_create() {
     throw std::runtime_error("Failed to get information from package " + mPath);
   }
   if (is_registered()) {
-    notify(mInfo->name() + "-" + mInfo->version() +
-           " is already integrated into your system, skipping");
     return true;
   }
 

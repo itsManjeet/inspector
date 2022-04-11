@@ -25,7 +25,7 @@ bool AppImageHandler::install() {
   }
 
   auto integrator = appimage::desktop_integration::IntegrationManager();
-  if (integrator.isARegisteredAppImage(mPath)) return;
+  if (integrator.isARegisteredAppImage(mPath)) return true;
 
   integrator.registerAppImage(appImage);
   integrator.generateThumbnails(appImage);
