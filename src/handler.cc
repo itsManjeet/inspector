@@ -43,9 +43,9 @@ std::shared_ptr<Handler> Handler::from_path(string path) {
     return std::make_shared<AppImageHandler>(path);
   } else if (ext == "theme") {
     return std::make_shared<ThemeHandler>(path);
-  } else if (ext == "font") {
+  } else if (ext == "fonts") {
     return std::make_shared<FontHandler>(path);
-  } else if (ext == "icon") {
+  } else if (ext == "icons") {
     return std::make_shared<IconHandler>(path);
   } else {
     return nullptr;
