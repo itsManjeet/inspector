@@ -17,7 +17,7 @@ std::shared_ptr<Info> ThemeHandler::info() {
   string result;
 
   unique_ptr<FILE, decltype(&pclose)> pipe(
-      popen(("tar -xaf " + mPath + " -O- ./info").c_str(), "r"), pclose);
+      popen(("tar -xaf " + mPath + " -O ./info").c_str(), "r"), pclose);
 
   if (!pipe) {
     throw runtime_error("popen() failed");
