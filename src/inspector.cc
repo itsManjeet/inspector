@@ -30,10 +30,10 @@ void Inspector::inspect() {
       auto handler = Handler::from_path(iter->first);
       if (handler != nullptr) {
         try {
-            handler->handle_delete();
-          } catch (std::exception const& exc) {
-            cerr << "Error! " << exc.what() << endl;
-          }
+          handler->handle_delete();
+        } catch (std::exception const& exc) {
+          cerr << "Error! " << exc.what() << endl;
+        }
       }
 
       iter = mStore.erase(iter);
@@ -43,6 +43,7 @@ void Inspector::inspect() {
   }
 
   for (auto const& p : mPaths) {
+    if (!std::filesystem::exists(p)) continue;
     for (auto& f : fs::directory_iterator(p)) {
       if (!f.is_regular_file()) continue;
 
